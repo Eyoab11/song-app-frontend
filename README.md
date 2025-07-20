@@ -83,6 +83,25 @@ These colors are defined in `src/styles/theme.js` and are used throughout the ap
 ### Analogical Explanation
 - Think of `App.js` as the “main room” of your house, where you set the mood (theme/colors) and invite guests (other components/pages) to join.
 
+## State Management with Redux Toolkit & Redux-Saga
+
+We have set up a robust state management system for the app using **Redux Toolkit** and **Redux-Saga**:
+
+- **store.js**:  
+  This file configures the Redux store. It combines all reducers (currently just `songsReducer` for song-related state) and sets up Redux-Saga middleware to handle side effects like API calls.
+
+- **rootSaga.js**:  
+  The root saga is the main entry point for all saga side-effect logic. It combines and starts all individual sagas (such as `songsSaga`) so they can listen for dispatched actions and perform asynchronous tasks.
+
+- **songsSlice.js**:  
+  This file defines the Redux slice for songs. It contains the initial state, reducers for handling song-related actions, and action creators. All state and logic related to songs is managed here.
+
+- **songsSaga.js**:  
+  This file contains saga functions that handle asynchronous operations for songs, such as fetching songs from an API. It listens for specific actions, performs the async work, and dispatches actions to update the Redux state.
+
+**How it works together:**  
+When you dispatch an action (like fetching songs), the saga middleware intercepts it, runs the appropriate saga (from `songsSaga`), performs the async operation, and then updates the state in the songs slice. This keeps async logic separate from UI and reducers, making the app easier to maintain and extend.
+
 ## How to Run the Project
 
 1. **Install dependencies:**
