@@ -37,6 +37,24 @@ Imagine building a house (your app):
 - **Environment Variables:**
   - `API_BASE_URL` is set via `DefinePlugin`. For production, set `API_BASE_URL` in your environment before building.
 
+## How the App Starts Up
+
+### General Explanation
+- The app starts with an HTML file (`public/index.html`) that provides a basic web page with a single `<div id="root"></div>`. This is where the React app will appear.
+- The JavaScript entry point (`src/index.js`) takes over and renders the React application inside that div.
+
+### Technical Explanation
+- `public/index.html` is the static HTML template. Webpack injects your JavaScript bundle into this file.
+- `src/index.js` is the main entry point for the React app. It:
+  - Imports React and ReactDOM.
+  - Uses `ReactDOM.createRoot` (React 18+) to attach the app to the `root` div.
+  - Wraps the app in `<Provider store={store}>` to connect Redux state management.
+  - Uses `<React.StrictMode>` for highlighting potential problems in development.
+
+### Analogical Explanation
+- Think of `index.html` as an empty house with a special room (`<div id="root">`) waiting to be decorated.
+- `index.js` is the decorator: it brings in all the furniture (your React app), sets up the electricity (Redux for state management), and makes sure everything is safe and up to code (React.StrictMode).
+
 ## How to Run the Project
 
 1. **Install dependencies:**
@@ -77,7 +95,7 @@ Imagine building a house (your app):
 ## AI Usage
 
 - **Parts generated with AI:**
-  - Initial Webpack configuration and improvements were assisted by AI tools (e.g., ChatGPT), but all code was reviewed and understood before submission.
+  - Initial Webpack configuration and improvements were assisted by AI tool (Google AI Studio), but all code was reviewed and understood before submission.
 - **Verification:**
   - The configuration was tested by running the dev server and building the project. Debugging steps included checking for build errors and verifying hot reloading and asset handling.
 
