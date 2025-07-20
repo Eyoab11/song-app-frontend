@@ -1,0 +1,96 @@
+# Song Management App (Frontend)
+
+This is the frontend for the Song Management App, built as part of the Addis Software Test Project. It is set up manually with Webpack (no Create React App) and is ready for integration with a REST API backend.
+
+## What Has Been Done So Far
+
+### Simple Analogy
+
+Imagine building a house (your app):
+- **Webpack** is your construction manager, assembling all your materials (JS, CSS, images) into a finished house (the app in the `dist` folder).
+- **Babel** is a translator for your blueprints, making sure your modern designs (JSX, ES6+) are understood by all browsers.
+- **CleanWebpackPlugin** is the cleaning crew, sweeping out the old house before every new build.
+- **HtmlWebpackPlugin** is the welcome mat, creating the main HTML file and putting your finished house (the JS bundle) inside.
+- **webpack-dev-server** is your address, letting you preview your house at `localhost:3000` and see changes instantly.
+- **DefinePlugin** is your secret key, setting things like the API address so your app knows where to fetch data.
+- **npm scripts** are your instructions to the crew: `npm start` to build and watch for changes, `npm run build` for the final house.
+
+### Technical Breakdown
+
+- **Manual Webpack Setup:** No CRA, all configuration is custom.
+- **Babel Configuration:** `.babelrc` uses `@babel/preset-env` for modern JS and `@babel/preset-react` (with automatic runtime) for JSX.
+- **Webpack Rules:**
+  - **JavaScript/JSX:** Uses Babel loader to transpile modern JS and React code.
+  - **CSS:** Uses `style-loader` and `css-loader` to allow importing CSS files into JS.
+  - **Images:** Uses Webpack 5 asset modules to handle image files (png, svg, jpg, jpeg, gif).
+- **Plugins:**
+  - **HtmlWebpackPlugin:** Generates the HTML file from a template and injects the JS bundle.
+  - **CleanWebpackPlugin:** Cleans the `dist` folder before each build to prevent leftover files.
+  - **DefinePlugin:** Injects environment variables (like `API_BASE_URL`) into the app at build time.
+- **Dev Server:**
+  - Hot Module Replacement for instant updates.
+  - History API fallback for client-side routing.
+  - Runs on port 3000.
+- **Scripts:**
+  - `npm start`: Runs the dev server for development.
+  - `npm run build`: Builds the app for production.
+- **Environment Variables:**
+  - `API_BASE_URL` is set via `DefinePlugin`. For production, set `API_BASE_URL` in your environment before building.
+
+## How to Run the Project
+
+1. **Install dependencies:**
+   ```bash
+   cd song-app-frontend
+   npm install
+   ```
+2. **Start the development server:**
+   ```bash
+   npm start
+   ```
+   This will run the app at [http://localhost:3000](http://localhost:3000).
+
+3. **Build for production:**
+   ```bash
+   npm run build
+   ```
+   The output will be in the `dist` folder.
+
+## Webpack Configuration Explained
+
+- **Entry/Output:**
+  - Entry: `src/index.js`
+  - Output: `dist/bundle.js`
+- **Loaders:**
+  - Babel for JS/JSX
+  - CSS loader for CSS files
+  - Asset module for images
+- **Plugins:**
+  - `HtmlWebpackPlugin` for HTML generation
+  - `CleanWebpackPlugin` to clear `dist` before build
+  - `DefinePlugin` for environment variables
+- **Dev Server:**
+  - Hot reloading, static serving, and client-side routing support
+- **Environment Variables:**
+  - `API_BASE_URL` is set via `DefinePlugin`. For production, set `API_BASE_URL` in your environment before building.
+
+## AI Usage
+
+- **Parts generated with AI:**
+  - Initial Webpack configuration and improvements were assisted by AI tools (e.g., ChatGPT), but all code was reviewed and understood before submission.
+- **Verification:**
+  - The configuration was tested by running the dev server and building the project. Debugging steps included checking for build errors and verifying hot reloading and asset handling.
+
+## Next Steps
+
+- Implement the React app (song list, CRUD, pagination)
+- Add Redux Toolkit and Redux-Saga for state management and API side effects
+- Integrate Emotion/Styled System for theming and responsive styling
+- Connect to a backend (JSONPlaceholder, MirageJS, or custom API)
+- Add unit/component tests (Jest, React Testing Library)
+- Optimize bundle size (code splitting, lazy loading)
+- Deployment (Netlify/Vercel)
+
+---
+
+Feel free to reach out if you have any questions or need further clarification! 
