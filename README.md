@@ -55,6 +55,34 @@ Imagine building a house (your app):
 - Think of `index.html` as an empty house with a special room (`<div id="root">`) waiting to be decorated.
 - `index.js` is the decorator: it brings in all the furniture (your React app), sets up the electricity (Redux for state management), and makes sure everything is safe and up to code (React.StrictMode).
 
+## App Color Theme
+
+The app uses a modern, harmonious color palette inspired by a soft yellow and various shades of blue:
+
+| Name        | Hex       | Example        |
+|-------------|-----------|---------------|
+| Background  | #FFFbDE   | Soft yellow   |
+| Primary     | #91C8E4   | Light blue    |
+| Secondary   | #749BC2   | Muted blue    |
+| Accent      | #4682A9   | Deep blue     |
+| Text        | #222B38   | Dark blue-gray|
+| Text Muted  | #749BC2   | Muted blue    |
+
+These colors are defined in `src/styles/theme.js` and are used throughout the app for backgrounds, buttons, text, and highlights. This ensures a consistent and visually appealing user experience.
+
+## Main Application Component (App.js)
+
+### General Explanation
+- `App.js` is the main component that sets up the app’s look and feel using the theme and displays the main content (currently the HomePage).
+
+### Technical Explanation
+- Imports the custom theme and wraps the app in Emotion’s `ThemeProvider`, making the color palette and theme available to all styled components.
+- Renders a main heading and the `HomePage` component.
+- Includes a placeholder for global styles, which can be added for consistent base styling across the app.
+
+### Analogical Explanation
+- Think of `App.js` as the “main room” of your house, where you set the mood (theme/colors) and invite guests (other components/pages) to join.
+
 ## How to Run the Project
 
 1. **Install dependencies:**
@@ -111,4 +139,3 @@ Imagine building a house (your app):
 
 ---
 
-Feel free to reach out if you have any questions or need further clarification! 
