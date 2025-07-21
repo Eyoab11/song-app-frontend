@@ -15,7 +15,6 @@ const SongCard = ({ title, artist, album, year, published, image_url, location, 
       className="rounded-xl overflow-hidden shadow-lg flex flex-col h-full cursor-pointer transform transition duration-300 hover:scale-105 hover:shadow-2xl group bg-[#2c2c2c]"
       onClick={handleCardClick}
       tabIndex={0}
-      role="button"
       aria-label={`View details for ${title}`}
     >
       <div className="h-48 w-full overflow-hidden">
