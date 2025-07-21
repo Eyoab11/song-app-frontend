@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from './components/Header';
@@ -7,8 +7,6 @@ import SongGrid from './components/SongGrid';
 import AddSongModal from './components/AddSongModal';
 import Footer from './components/Footer';
 import LoadingScreen from './components/LoadingScreen';
-import SongDetailsPage from './pages/SongDetailsPage';
-import NotImplementedPage from './pages/NotImplementedPage';
 import {
   fetchSongsStart,
   addSongStart,
@@ -17,7 +15,11 @@ import {
 } from './features/songs/songsSlice';
 import { ThemeProvider } from './context/ThemeContext';
 
-function MainApp() {
+const MainApp = lazy(() => import('./App').then(m => ({ default: m.MainApp || m.default.MainApp || m.default }))); // support both named and default export
+const SongDetailsPage = lazy(() => import('./pages/SongDetailsPage'));
+const NotImplementedPage = lazy(() => import('./pages/NotImplementedPage'));
+
+function MainAppComponent() {
   const dispatch = useDispatch();
   const { list: songs, status } = useSelector(state => state.songs);
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -121,14 +123,16 @@ export default function App() {
   return (
     <ThemeProvider>
       <Router>
-        <Routes>
-          <Route path="/" element={<MainApp />} />
-          <Route path="/songs/:id" element={<SongDetailsPage />} />
-          <Route path="/features" element={<NotImplementedPage page="Features" />} />
-          <Route path="/artists" element={<NotImplementedPage page="Artists" />} />
-          <Route path="/contact" element={<NotImplementedPage page="Contact" />} />
-          <Route path="/signup" element={<NotImplementedPage page="Sign Up" />} />
-        </Routes>
+        <Suspense fallback={<LoadingScreen />}>
+          <Routes>
+            <Route path="/" element={<MainAppComponent />} />
+            <Route path="/songs/:id" element={<SongDetailsPage />} />
+            <Route path="/features" element={<NotImplementedPage page="Features" />} />
+            <Route path="/artists" element={<NotImplementedPage page="Artists" />} />
+            <Route path="/contact" element={<NotImplementedPage page="Contact" />} />
+            <Route path="/signup" element={<NotImplementedPage page="Sign Up" />} />
+          </Routes>
+        </Suspense>
       </Router>
     </ThemeProvider>
   );

@@ -19,7 +19,7 @@ const SongCard = ({ title, artist, album, year, published, image_url, location, 
       aria-label={`View details for ${title}`}
     >
       <div className="h-48 w-full overflow-hidden">
-        <img src={image_url || fallbackImage} alt={title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-300" />
+        <img src={image_url || fallbackImage} alt={title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-300" loading="lazy" />
       </div>
       <div className="flex-1 flex flex-col p-6">
         <div className="flex items-center mb-2">
