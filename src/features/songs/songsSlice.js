@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  list: [], // Holds the array of songs
-  status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
+  list: [],
+  status: 'idle',
   error: null,
 };
 
@@ -10,35 +10,61 @@ const songsSlice = createSlice({
   name: 'songs',
   initialState,
   reducers: {
-    // Action to start the fetch process
+    // Fetch
     fetchSongsStart(state) {
       state.status = 'loading';
       state.error = null;
     },
-    // Action for when songs are fetched successfully.
     fetchSongsSuccess(state, action) {
       state.status = 'succeeded';
-      state.list = action.payload; 
+      state.list = action.payload;
     },
-    // Action for when fetching fails.
     fetchSongsFailure(state, action) {
       state.status = 'failed';
-      state.error = action.payload; 
-    },
-    
-    addSongStart(state) {
-      
-    },
-    addSongSuccess(state, action) {
-      state.list.push(action.payload); // Add the new song to the list
-    },
-    addSongFailure(state, action) {
       state.error = action.payload;
     },
-   
+    // Add
+    addSongStart(state) {
+      state.status = 'loading';
+      state.error = null;
+    },
+    addSongSuccess(state, action) {
+      state.list.push(action.payload);
+      state.status = 'succeeded';
+    },
+    addSongFailure(state, action) {
+      state.status = 'failed';
+      state.error = action.payload;
+    },
+    // Update
+    updateSongStart(state) {
+      state.status = 'loading';
+      state.error = null;
+    },
+    updateSongSuccess(state, action) {
+      const idx = state.list.findIndex(song => song.id === action.payload.id);
+      if (idx !== -1) state.list[idx] = action.payload;
+      state.status = 'succeeded';
+    },
+    updateSongFailure(state, action) {
+      state.status = 'failed';
+      state.error = action.payload;
+    },
+    // Delete
+    deleteSongStart(state) {
+      state.status = 'loading';
+      state.error = null;
+    },
+    deleteSongSuccess(state, action) {
+      state.list = state.list.filter(song => song.id !== action.payload);
+      state.status = 'succeeded';
+    },
+    deleteSongFailure(state, action) {
+      state.status = 'failed';
+      state.error = action.payload;
+    },
   },
 });
-
 
 export const {
   fetchSongsStart,
@@ -47,7 +73,12 @@ export const {
   addSongStart,
   addSongSuccess,
   addSongFailure,
+  updateSongStart,
+  updateSongSuccess,
+  updateSongFailure,
+  deleteSongStart,
+  deleteSongSuccess,
+  deleteSongFailure,
 } = songsSlice.actions;
-
 
 export default songsSlice.reducer;

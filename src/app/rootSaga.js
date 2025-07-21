@@ -4,6 +4,5 @@ import { songsSaga } from '../features/songs/songsSaga';
 export function* rootSaga() {
   yield all([
     songsSaga(),
-
   ]);
 }

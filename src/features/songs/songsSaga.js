@@ -1,33 +1,66 @@
 import { call, put, takeLatest, all } from 'redux-saga/effects';
-import { fetchSongsFromApi } from '../../api/songApi';
+import {
+  fetchSongsFromApi,
+  createSongInApi,
+  updateSongInApi,
+  deleteSongInApi,
+} from '../../api/songApi';
 import {
   fetchSongsStart,
   fetchSongsSuccess,
   fetchSongsFailure,
+  addSongStart,
+  addSongSuccess,
+  addSongFailure,
+  updateSongStart,
+  updateSongSuccess,
+  updateSongFailure,
+  deleteSongStart,
+  deleteSongSuccess,
+  deleteSongFailure,
 } from './songsSlice';
 
-// I run when it's time to fetch songs
 function* handleFetchSongs() {
   try {
-    const response = yield call(fetchSongsFromApi); // I call the API
-    yield put(fetchSongsSuccess(response.data)); // Success! I send data to store
+    const data = yield call(fetchSongsFromApi);
+    yield put(fetchSongsSuccess(data));
   } catch (error) {
-    yield put(fetchSongsFailure(error.message)); // Uh oh, I ran into a problem
+    yield put(fetchSongsFailure(error.message));
   }
 }
 
-// I watch for fetch actions and run the worker above
-function* watchFetchSongs() {
-  yield takeLatest(fetchSongsStart.type, handleFetchSongs); // Only the latest fetch matters to me
+function* handleAddSong(action) {
+  try {
+    const newSong = yield call(createSongInApi, action.payload);
+    yield put(addSongSuccess(newSong));
+  } catch (error) {
+    yield put(addSongFailure(error.message));
+  }
 }
 
-// I can add more watchers here for add, update, delete if needed
-// function* watchAddSong() { ... }
+function* handleUpdateSong(action) {
+  try {
+    const updatedSong = yield call(updateSongInApi, action.payload.id, action.payload);
+    yield put(updateSongSuccess(updatedSong));
+  } catch (error) {
+    yield put(updateSongFailure(error.message));
+  }
+}
 
-// This is my main saga for songs. I'll add more as I go.
+function* handleDeleteSong(action) {
+  try {
+    yield call(deleteSongInApi, action.payload);
+    yield put(deleteSongSuccess(action.payload));
+  } catch (error) {
+    yield put(deleteSongFailure(error.message));
+  }
+}
+
 export function* songsSaga() {
   yield all([
-    watchFetchSongs(),
-    // I'll add more watchers here
+    takeLatest(fetchSongsStart.type, handleFetchSongs),
+    takeLatest(addSongStart.type, handleAddSong),
+    takeLatest(updateSongStart.type, handleUpdateSong),
+    takeLatest(deleteSongStart.type, handleDeleteSong),
   ]);
 }
